@@ -8,15 +8,26 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
+    /* Top-level navbar links in white, dropdowns unchanged */
+    .nav-links > .nav-item > .nav-link {
+        color: #fff !important;
+    }
+    .nav-links > .nav-item > .nav-link:hover {
+        color: #e0ffe0 !important;
+    }
+    
     :root {
       --primary-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+      --card-gradient: linear-gradient(145deg, rgba(20,83,45,0.95) 0%, rgba(38,115,77,0.85) 100%);
       --bg-primary: linear-gradient(135deg, #e0ffe0 0%, #f8fafc 100%);
       --bg-card: linear-gradient(145deg, rgba(255,255,255,0.95) 0%, rgba(232,255,244,0.9) 100%);
       --text-primary: #184e68;
       --text-secondary: #57ca85;
       --border: #57ca85;
+      --radius: 12px;
       --radius-xl: 20px;
       --shadow-xl: 0 20px 25px -5px rgba(67, 233, 123, 0.1), 0 10px 10px -5px rgba(67, 233, 123, 0.04);
+      --shadow-gradient: 0 10px 30px rgba(67, 233, 123, 0.3);
       --max-width: 1400px;
     }
     body {
@@ -25,36 +36,88 @@
       min-height: 100vh;
     }
     .header {
-      background: var(--primary-gradient);
+      background: var(--card-gradient);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 0;
+      box-shadow: var(--shadow-gradient);
       color: white;
-      padding: 0.5rem 0;
-      margin-bottom: 0;
     }
     .navbar .navbar-brand {
-      font-weight: 700;
-      font-size: 1.5rem;
-      color: white;
+      font-size: 2rem;
+      font-weight: 800;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      transition: all 0.3s ease;
+      cursor: pointer;
     }
-    .navbar .nav-link {
-      color: white !important;
+    .navbar .navbar-brand:hover {
+      transform: scale(1.05);
+      filter: brightness(1.1);
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-secondary);
       font-weight: 500;
+      padding: 0.75rem 1.25rem;
+      border-radius: var(--radius);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
     }
-    .navbar .nav-link:hover {
-      color: #184e68 !important;
+    .nav-links a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 100%;
+      background: var(--primary-gradient);
+      transition: width 0.3s ease;
+      z-index: -1;
+      opacity: 0.1;
+    }
+    .nav-links a:hover::before {
+      width: 100%;
+      opacity: 0.2;
+    }
+    .nav-links a:hover {
+      color: var(--primary);
+      transform: translateY(-1px);
     }
     .nav-cta {
-      background: #184e68;
-      color: #fff;
-      padding: 0.5rem 1.2rem;
-      border-radius: 12px;
-      font-weight: 600;
+      background: var(--primary-gradient);
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: var(--radius);
       text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow-gradient);
+      position: relative;
+      overflow: hidden;
       margin-left: 1rem;
-      transition: background 0.3s;
+    }
+    .nav-cta::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #a8ff78 0%, #78ffd6 100%);
+      transition: left 0.3s ease;
+      z-index: -1;
+    }
+    .nav-cta:hover::before {
+      left: 0;
     }
     .nav-cta:hover {
-      background: #57ca85;
-      color: #184e68;
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-xl);
     }
     .contact-section {
       padding: 3rem 0;
@@ -180,33 +243,14 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav mx-auto nav-links">
-            <li class="nav-item"><a class="nav-link" href="job-finder.html#home">Home</a></li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownJobs" role="button" data-bs-toggle="dropdown" aria-expanded="false">Jobs</a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdownJobs">
-                <li><a class="dropdown-item" href="#">HR</a></li>
-                <li><a class="dropdown-item" href="#">Frontend Developer</a></li>
-                <li><a class="dropdown-item" href="#">Fullstack Developer</a></li>
-                <li><a class="dropdown-item" href="#">Backend Developer</a></li>
-                <li><a class="dropdown-item" href="#">Marketing</a></li>
-                <li><a class="dropdown-item" href="#">UI/UX Designer</a></li>
-                <li><a class="dropdown-item" href="#">Data Scientist</a></li>
-              </ul>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownCompanies" role="button" data-bs-toggle="dropdown" aria-expanded="false">Companies</a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdownCompanies">
-                <li><a class="dropdown-item" href="#">TechCorp Solutions</a></li>
-                <li><a class="dropdown-item" href="#">StartupXYZ</a></li>
-                <li><a class="dropdown-item" href="#">FinBank</a></li>
-                <li><a class="dropdown-item" href="#">HealthPlus</a></li>
-                <li><a class="dropdown-item" href="#">Designify</a></li>
-              </ul>
-            </li>
+            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="index.html#featured-jobs">Jobs</a></li>
+            <li class="nav-item"><a class="nav-link" href="index.html#companies">Companies</a></li>
             <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
             <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
           </ul>
-          <a href="#" class="nav-cta" data-bs-toggle="modal" data-bs-target="#joblyLoginModal">Get Started</a>
+          <a href="profile.html" id="userNav" class="nav-cta" style="display:none;" target="_blank"></a>
+          <a href="#" id="getStartedBtn" class="nav-cta" data-bs-toggle="modal" data-bs-target="#joblyLoginModal">Get Started</a>
         </div>
       </div>
     </nav>

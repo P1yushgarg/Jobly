@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Profile - Jobly</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+	<style>
+		:root {
+			--primary-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+			--card-gradient: linear-gradient(145deg, rgba(20,83,45,0.95) 0%, rgba(38,115,77,0.85) 100%);
+			--bg-primary: linear-gradient(135deg, #e0ffe0 0%, #f8fafc 100%);
+			--bg-card: linear-gradient(145deg, rgba(255,255,255,0.95) 0%, rgba(232,255,244,0.9) 100%);
+			--text-primary: #184e68;
+			--text-secondary: #57ca85;
+			--border: #57ca85;
+			--radius: 12px;
+			--radius-xl: 20px;
+			--shadow-xl: 0 20px 25px -5px rgba(67, 233, 123, 0.1), 0 10px 10px -5px rgba(67, 233, 123, 0.04);
+			--shadow-gradient: 0 10px 30px rgba(67, 233, 123, 0.3);
+			--max-width: 1400px;
+		}
+		body {
+			background: var(--bg-primary);
+			font-family: 'Inter', sans-serif;
+			min-height: 100vh;
+		}
+		/* Top-level navbar links in white, dropdowns unchanged */
+		.nav-links > .nav-item > .nav-link {
+			color: #fff !important;
+		}
+		.nav-links > .nav-item > .nav-link:hover {
+			color: #e0ffe0 !important;
+		}
+		
+		.header {
+			background: var(--card-gradient);
+			backdrop-filter: blur(20px);
+			border-bottom: 1px solid var(--border);
+			padding: 1rem 0;
+			box-shadow: var(--shadow-gradient);
+			color: white;
+		}
+		.navbar .navbar-brand {
+			font-size: 2rem;
+			font-weight: 800;
+			background: var(--primary-gradient);
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+			background-clip: text;
+			transition: all 0.3s ease;
+			cursor: pointer;
+		}
+		.navbar .navbar-brand:hover {
+			transform: scale(1.05);
+			filter: brightness(1.1);
+		}
+		.nav-links a {
+			text-decoration: none;
+			color: var(--text-secondary);
+			font-weight: 500;
+			padding: 0.75rem 1.25rem;
+			border-radius: var(--radius);
+			transition: all 0.3s ease;
+			position: relative;
+			overflow: hidden;
+		}
+		.nav-links a::before {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 0;
+			height: 100%;
+			background: var(--primary-gradient);
+			transition: width 0.3s ease;
+			z-index: -1;
+			opacity: 0.1;
+		}
+		.nav-links a:hover::before {
+			width: 100%;
+			opacity: 0.2;
+		}
+		.nav-links a:hover {
+			color: var(--primary);
+			transform: translateY(-1px);
+		}
+		.nav-cta {
+			background: var(--primary-gradient);
+			color: white;
+			padding: 0.75rem 1.5rem;
+			border-radius: var(--radius);
+			text-decoration: none;
+			font-weight: 600;
+			transition: all 0.3s ease;
+			box-shadow: var(--shadow-gradient);
+			position: relative;
+			overflow: hidden;
+			margin-left: 1rem;
+		}
+		.nav-cta::before {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: -100%;
+			width: 100%;
+			height: 100%;
+			background: linear-gradient(135deg, #a8ff78 0%, #78ffd6 100%);
+			transition: left 0.3s ease;
+			z-index: -1;
+		}
+		.nav-cta:hover::before {
+			left: 0;
+		}
+		.nav-cta:hover {
+			color: white;
+			transform: translateY(-2px);
+			box-shadow: var(--shadow-xl);
+		}
+			.container-fluid {
+				max-width: 1200px;
+				margin: 0 auto;
+			}
+			.profile-card {
+				background: var(--bg-card);
+				border-radius: var(--radius-xl);
+				box-shadow: var(--shadow-xl);
+				padding: 32px 32px 24px 32px;
+				margin-bottom: 32px;
+				display: flex;
+				align-items: center;
+				margin-top: 32px;
+			}
+			.profile-photo {
+				position: relative;
+				width: 120px;
+				height: 120px;
+				border-radius: 50%;
+				background: #e9ecef;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-size: 2rem;
+				margin-right: 40px;
+				box-shadow: 0 4px 16px rgba(67,233,123,0.08);
+			}
+			.progress-circle {
+				position: absolute;
+				top: 0; left: 0;
+				width: 120px; height: 120px;
+				pointer-events: none;
+			}
+			.profile-info {
+				flex: 1;
+				color: var(--text-primary);
+			}
+			.profile-info h2 {
+				font-weight: 700;
+				margin-bottom: 4px;
+				color: var(--text-primary);
+			}
+			.profile-info .edit {
+				font-size: 1rem;
+				color: var(--text-secondary);
+				cursor: pointer;
+			}
+			.profile-details {
+				display: flex;
+				gap: 32px;
+				margin-top: 16px;
+				flex-wrap: wrap;
+			}
+			.profile-details .detail {
+				display: flex;
+				align-items: center;
+				gap: 8px;
+				color: var(--text-primary);
+				margin-bottom: 8px;
+				font-weight: 500;
+			}
+			.sidebar {
+				position: absolute;
+				left: 0;
+				top: 380px;
+				width: 220px;
+				background: var(--bg-card);
+				border-radius: var(--radius-xl);
+				box-shadow: var(--shadow-xl);
+				padding: 24px 0;
+				margin-bottom: 32px;
+			}
+			.main-content {
+				margin-left: 250px;
+				padding: 32px 32px 32px 0;
+			}
+			.sidebar .quick-links {
+				list-style: none;
+				padding: 0;
+				margin: 0;
+			}
+			.sidebar .quick-links li {
+				padding: 14px 32px;
+				font-weight: 500;
+				color: var(--text-primary);
+				cursor: pointer;
+				transition: background 0.2s;
+				border-left: 3px solid transparent;
+				background: none;
+			}
+			.sidebar .quick-links li.active,
+			.sidebar .quick-links li:hover {
+				background: #e0ffe0;
+				color: var(--text-secondary);
+				border-left: 3px solid var(--text-secondary);
+			}
+			.main-content {
+				margin-left: 250px;
+				padding: 32px 32px 32px 0;
+			}
+			.card-section {
+				background: var(--bg-card);
+				border-radius: var(--radius-xl);
+				box-shadow: var(--shadow-xl);
+				padding: 32px 40px;
+				margin-bottom: 32px;
+			}
+			.card-section .section-title {
+				font-weight: 700;
+				font-size: 1.3rem;
+				margin-bottom: 20px;
+				color: var(--text-primary);
+			}
+			.add-link {
+				color: #fff;
+				background: var(--text-secondary);
+				font-weight: 600;
+				cursor: pointer;
+				border: none;
+				border-radius: 6px;
+				padding: 4px 16px;
+				font-size: 0.95rem;
+				margin-left: 8px;
+				transition: background 0.2s;
+				text-decoration: none;
+				display: inline-block;
+				box-shadow: 0 2px 8px rgba(67,233,123,0.08);
+			}
+			.add-link:hover {
+				background: #43e97b;
+			}
+			.edit {
+				color: var(--text-secondary);
+				cursor: pointer;
+				margin-left: 8px;
+			}
+		.footer {
+			background: var(--bg-card);
+			padding: 3rem 2rem 2rem;
+			border-top: 2px solid var(--border);
+			margin-top: 3rem;
+		}
+		.footer-content {
+			max-width: var(--max-width);
+			margin: 0 auto;
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+			gap: 2rem;
+			margin-bottom: 2rem;
+		}
+		.footer-section h3 {
+			color: var(--text-primary);
+			margin-bottom: 1rem;
+			font-size: 1.1rem;
+			font-weight: 700;
+		}
+		.footer-section ul {
+			list-style: none;
+			padding-left: 0;
+		}
+		.footer-section a {
+			color: var(--text-secondary);
+			text-decoration: none;
+			transition: all 0.3s ease;
+			line-height: 2;
+			font-weight: 500;
+		}
+		.footer-section a:hover {
+			color: #43e97b;
+			transform: translateX(5px);
+		}
+		.footer-bottom {
+			text-align: center;
+			padding-top: 2rem;
+			border-top: 2px solid var(--border);
+			color: var(--text-secondary);
+			font-weight: 500;
+		}
+		@media (max-width: 900px) {
+			.sidebar {
+				position: static !important;
+				width: 100%;
+				margin-bottom: 24px;
+				left: 0 !important;
+				top: 0 !important;
+			}
+			.main-content {
+				margin-left: 0;
+				padding: 16px;
+			}
+		}
+	</style>
+</head>
+	</style>
+</head>
+<body>
+	<!-- Header -->
+	<header class="header">
+		<nav class="navbar navbar-expand-lg">
+			<div class="container">
+				<p class="navbar-brand logo">Jobly</p>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarNav">
+					<ul class="navbar-nav mx-auto nav-links">
+						<li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+						<li class="nav-item"><a class="nav-link" href="index.html#featured-jobs">Jobs</a></li>
+						<li class="nav-item"><a class="nav-link" href="index.html#companies">Companies</a></li>
+						<li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+						<li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+					</ul>
+					  <button class="btn btn-danger" id="logoutBtn" style="font-weight:600;box-shadow:0 2px 8px rgba(255,77,79,0.08);margin-left:1rem;">Log Out <i class="fa fa-sign-out-alt"></i></button>
+				</div>
+			</div>
+		</nav>
+	</header>
+
+	<!-- Top Profile Card -->
+	<div class="container-fluid">
+		<div class="profile-card mt-4">
+			<div class="profile-photo">
+				<span ></span>
+				<svg class="progress-circle" viewBox="0 0 120 120">
+					<circle cx="60" cy="60" r="54" stroke="#e9ecef" stroke-width="8" fill="none"/>
+					<circle cx="60" cy="60" r="54" stroke="#ff4d4f" stroke-width="8" fill="none" stroke-dasharray="339.292" stroke-dashoffset="203.575"/>
+				</svg>
+				<div style="position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);background:#fff;padding:2px 12px;border-radius:12px;font-size:0.9rem;color:#ff4d4f;border:1px solid #eee;">40%</div>
+			</div>
+			<div class="profile-info">
+				<h2 id="profileName"><span class="edit"></span></h2>
+				<div style="font-weight:500;color:#555;">B.Tech/B.E.</div>
+				<div style="color:#888;">Chitkara University, Patiala</div>
+				<div class="profile-details">
+					<div class="detail"><i class="fa fa-map-marker-alt"></i> Rajpura</div>
+					<div class="detail" id="genderDetail">
+						<button class="add-link" id="addGenderBtn">Add Gender</button>
+					</div>
+					<div class="detail" id="birthdayDetail">
+						<button class="add-link" id="addBirthdayBtn">Add birthday</button>
+					</div>
+					<div class="detail"><i class="fa fa-phone"></i> 9729296693 <i class="fa fa-check-circle" style="color:#52c41a;"></i></div>
+					<div class="detail"><i class="fa fa-envelope"></i> piyushgarg192006@... <i class="fa fa-check-circle" style="color:#52c41a;"></i></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Sidebar Quick Links -->
+	<div class="sidebar">
+		<ul class="quick-links">
+			<li class="active"><a href="#preferences" style="text-decoration:none;color:inherit;">Preference</a></li>
+			<li><a href="#education" style="text-decoration:none;color:inherit;">Education</a></li>
+			<li><a href="#skills" style="text-decoration:none;color:inherit;">Key skills</a></li>
+		</ul>
+	</div>
+	<!-- Main Content -->
+	<div class="main-content">
+		<div class="card-section" id="preferences">
+			<div class="section-title">Your career preferences <button class="add-link">Add</button></div>
+			<div class="row g-4">
+				<div class="col-md-6">
+					<div>Preferred job type</div>
+					<button class="add-link">Add desired job type</button>
+				</div>
+				<div class="col-md-6">
+					<div>Availability to work</div>
+					<button class="add-link">Add work availability</button>
+				</div>
+				<div class="col-md-6">
+					<div>Preferred location</div>
+					<button class="add-link">Add preferred work location</button>
+				</div>
+			</div>
+		</div>
+		<div class="card-section" id="education">
+			<div class="section-title">Education <button class="add-link">Add</button></div>
+			<div style="font-weight:600;">B.Tech/B.E. from Chitkara University, Patiala <span class="edit"><i class="fa fa-pencil-alt"></i></span></div>
+			<div style="color:#888;">Graduating in 2028, Full Time</div>
+			<button class="add-link">Add Class XII Details</button>
+			<div style="color:#888;">Scored Percentage, Passed out in Passing Year</div>
+			<button class="add-link">Add Class X Details</button>
+			<div style="color:#888;">Scored Percentage, Passed out in Passing Year</div>
+		</div>
+		<div class="card-section" id="skills">
+			<div class="section-title">Key skills <span class="edit"><i class="fa fa-pencil-alt"></i></span></div>
+			<div>Skill 1, Skill 2, Skill 3</div>
+		</div>
+		<!-- Add more sections as needed, with correct ids for sidebar links -->
+	</div>
+	
+	<!-- Gender Modal -->
+	<div class="modal fade" id="genderModal" tabindex="-1" aria-labelledby="genderModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="genderModalLabel">Add Gender</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div class="mb-3">
+						<label for="genderSelect" class="form-label">Select Gender</label>
+						<select class="form-select" id="genderSelect">
+							<option value="">Choose gender</option>
+							<option value="Male">Male</option>
+							<option value="Female">Female</option>
+							<option value="Other">Other</option>
+							<option value="Prefer not to say">Prefer not to say</option>
+						</select>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+					<button type="button" class="btn btn-success" id="saveGender">Save Gender</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Birthday Modal -->
+	<div class="modal fade" id="birthdayModal" tabindex="-1" aria-labelledby="birthdayModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="birthdayModalLabel">Add Date of Birth</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div class="mb-3">
+						<label for="birthdayInput" class="form-label">Date of Birth</label>
+						<input type="date" class="form-control" id="birthdayInput">
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+					<button type="button" class="btn btn-success" id="saveBirthday">Save Birthday</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- Logout Modal -->
+	<div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="logoutModalLabel">Confirm Logout</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					Are you sure you want to log out?
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+					<button type="button" class="btn btn-danger" id="confirmLogout">Log Out</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Footer -->
+	<footer class="footer">
+		<div class="footer-content">
+			<div class="footer-section">
+				<h3>Jobly</h3>
+				<p>Connecting talent with opportunity. Your career journey starts here.</p>
+			</div>
+			<div class="footer-section">
+				<h3>For Job Seekers</h3>
+				<ul>
+					<li><a href="#">Browse Jobs</a></li>
+					<li><a href="#">Career Advice</a></li>
+					<li><a href="#">Salary Tools</a></li>
+					<li><a href="#">Resume Builder</a></li>
+				</ul>
+			</div>
+			<div class="footer-section">
+				<ul>
+					<li><a href="#">Post Jobs</a></li>
+					<li><a href="#">Talent Search</a></li>
+					<li><a href="#">Employer Branding</a></li>
+					<li><a href="#">Pricing</a></li>
+				</ul>
+			</div>
+			<div class="footer-section">
+				<h3>Company</h3>
+				<ul>
+					<li><a href="#">About Us</a></li>
+					<li><a href="#">Contact</a></li>
+					<li><a href="#">Privacy Policy</a></li>
+					<li><a href="#">Terms of Service</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="footer-bottom">
+			<p>&copy; 2025 Jobly. All rights reserved.</p>
+		</div>
+	</footer>
+	<script>
+		// Load user data from localStorage
+		function getData(key) {
+			try {
+				return JSON.parse(window.localStorage.getItem(key));
+			} catch { return null; }
+		}
+		
+		function setData(key, value) {
+			window.localStorage.setItem(key, JSON.stringify(value));
+		}
+		
+		// Load profile data on page load
+		document.addEventListener('DOMContentLoaded', function() {
+			var user = getData('joblyUser');
+			if (user && user.name) {
+				// Check if there's a backed up profile for this user
+				var profileBackup = getData('joblyProfileBackup_' + user.email);
+				if (profileBackup && profileBackup.userInfo) {
+					// Restore the saved profile data
+					user = profileBackup.userInfo;
+					if (profileBackup.gender) user.gender = profileBackup.gender;
+					if (profileBackup.birthday) user.birthday = profileBackup.birthday;
+					
+					// Update the current user data
+					setData('joblyUser', user);
+					
+					console.log('Profile restored from backup for:', user.email);
+				}
+				
+				// Display profile information
+				document.getElementById('profileName').innerHTML = `${user.name} <span class="edit"><i class="fa fa-pencil-alt"></i></span>`;
+				
+				// Update progress circle initial if available
+				var progressCircle = document.querySelector('.profile-photo span');
+				if (progressCircle && user.name) {
+					progressCircle.textContent = user.name.trim()[0].toUpperCase();
+				}
+				
+				// Load gender and birthday if available
+				loadGenderAndBirthday();
+			} else {
+				// No user logged in, redirect to home
+				window.location.href = 'index.html';
+			}
+			
+			// Load gender and birthday if available
+			loadGenderAndBirthday();
+		});
+		
+		function loadGenderAndBirthday() {
+			var user = getData('joblyUser');
+			if (user) {
+				// Load gender
+				if (user.gender) {
+					document.getElementById('genderDetail').innerHTML = `<i class="fa fa-venus-mars"></i> ${user.gender} <span class="edit" onclick="editGender()"><i class="fa fa-pencil-alt"></i></span>`;
+				}
+				
+				// Load birthday
+				if (user.birthday) {
+					var date = new Date(user.birthday);
+					var formattedDate = date.toLocaleDateString('en-US', { 
+						year: 'numeric', 
+						month: 'long', 
+						day: 'numeric' 
+					});
+					document.getElementById('birthdayDetail').innerHTML = `<i class="fa fa-birthday-cake"></i> ${formattedDate} <span class="edit" onclick="editBirthday()"><i class="fa fa-pencil-alt"></i></span>`;
+				}
+			}
+		}
+		
+		function editGender() {
+			var genderModal = new bootstrap.Modal(document.getElementById('genderModal'));
+			genderModal.show();
+		}
+		
+		function editBirthday() {
+			var birthdayModal = new bootstrap.Modal(document.getElementById('birthdayModal'));
+			birthdayModal.show();
+		}
+		
+		// Add Gender button event
+		document.getElementById('addGenderBtn').addEventListener('click', function() {
+			var genderModal = new bootstrap.Modal(document.getElementById('genderModal'));
+			genderModal.show();
+		});
+		
+		// Add Birthday button event
+		document.getElementById('addBirthdayBtn').addEventListener('click', function() {
+			var birthdayModal = new bootstrap.Modal(document.getElementById('birthdayModal'));
+			birthdayModal.show();
+		});
+		
+		// Save Gender
+		document.getElementById('saveGender').addEventListener('click', function() {
+			var selectedGender = document.getElementById('genderSelect').value;
+			if (selectedGender) {
+				var user = getData('joblyUser') || {};
+				user.gender = selectedGender;
+				setData('joblyUser', user);
+				loadGenderAndBirthday();
+				var genderModal = bootstrap.Modal.getInstance(document.getElementById('genderModal'));
+				genderModal.hide();
+			} else {
+				alert('Please select a gender');
+			}
+		});
+		
+		// Save Birthday
+		document.getElementById('saveBirthday').addEventListener('click', function() {
+			var selectedBirthday = document.getElementById('birthdayInput').value;
+			if (selectedBirthday) {
+				var user = getData('joblyUser') || {};
+				user.birthday = selectedBirthday;
+				setData('joblyUser', user);
+				loadGenderAndBirthday();
+				var birthdayModal = bootstrap.Modal.getInstance(document.getElementById('birthdayModal'));
+				birthdayModal.hide();
+			} else {
+				alert('Please select a date of birth');
+			}
+		});
+		
+		// Logout button logic
+		document.getElementById('logoutBtn').addEventListener('click', function() {
+			var logoutModal = new bootstrap.Modal(document.getElementById('logoutModal'));
+			logoutModal.show();
+		});
+		
+		document.getElementById('confirmLogout').addEventListener('click', function() {
+			// Get current user data before logout
+			var currentUser = getData('joblyUser');
+			
+			// Save profile data to a separate key for restoration
+			if (currentUser) {
+				var profileData = {
+					userInfo: currentUser,
+					gender: currentUser.gender || '',
+					birthday: currentUser.birthday || '',
+					profileComplete: true,
+					timestamp: new Date().toISOString()
+				};
+				setData('joblyProfileBackup_' + currentUser.email, profileData);
+			}
+			
+			// Set logout flag in localStorage
+			localStorage.setItem('isLoggedOut', 'true');
+			
+			// Remove current user session
+			localStorage.removeItem('joblyUser');
+			
+			// Hide profile content temporarily
+			document.body.style.display = 'none';
+			
+			// Show logout confirmation
+			document.body.innerHTML = '<div style="display:flex;justify-content:center;align-items:center;height:100vh;font-family:Inter;background:linear-gradient(135deg, #e0ffe0 0%, #f8fafc 100%);"><div style="text-align:center;padding:2rem;background:white;border-radius:20px;box-shadow:0 20px 25px -5px rgba(67, 233, 123, 0.1);"><h2 style="color:#184e68;margin-bottom:1rem;">Profile Temporarily Hidden</h2><p style="color:#57ca85;margin-bottom:1rem;">Your profile data is safely stored and will be restored when you login again.</p><div style="color:#666;"><i class="fas fa-spinner fa-spin"></i> Redirecting to home page...</div></div></div>';
+			
+			// Redirect after 2 seconds
+			setTimeout(() => {
+				window.location.href = 'index.html';
+			}, 1000);
+		});
+		// Sidebar active link on scroll
+		const sections = document.querySelectorAll('.card-section');
+		const navLinks = document.querySelectorAll('.quick-links li');
+		window.addEventListener('scroll', () => {
+			let current = '';
+			sections.forEach(section => {
+				const sectionTop = section.offsetTop - 100;
+				if (window.scrollY >= sectionTop) {
+					current = section.getAttribute('id');
+				}
+			});
+			navLinks.forEach(li => {
+				li.classList.remove('active');
+				const a = li.querySelector('a');
+				if (a && a.getAttribute('href') === '#' + current) {
+					li.classList.add('active');
+				}
+			});
+		});
+		
+		// Smooth scroll for sidebar links
+		document.querySelectorAll('.quick-links a').forEach(link => {
+			link.addEventListener('click', function(e) {
+				const target = document.querySelector(this.getAttribute('href'));
+				if (target) {
+					e.preventDefault();
+					window.scrollTo({
+						top: target.offsetTop - 80,
+						behavior: 'smooth'
+					});
+				}
+			});
+		});
+	</script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

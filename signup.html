@@ -9,53 +9,19 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-    --primary-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
-    --secondary-gradient: linear-gradient(135deg, #a8ff78 0%, #78ffd6 100%);
-    --accent-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
-    --success-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
-    --warning-gradient: linear-gradient(135deg, #fceabb 0%, #f8b500 100%);
-    --info-gradient: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-    --dark-gradient: linear-gradient(135deg, #184e68 0%, #57ca85 100%);
-    --hero-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 50%, #a8ff78 100%);
-    --card-gradient: linear-gradient(145deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.7) 100%);
-    --section-gradient: linear-gradient(135deg, #a8ff78 0%, #43e97b 25%, #38f9d7 75%, #78ffd6 100%);
-    --testimonial-gradient: linear-gradient(135deg, #a8ff78 0%, #78ffd6 100%);
-    --text-gradient-primary: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
-    --text-gradient-accent: linear-gradient(135deg, #a8ff78 0%, #78ffd6 100%);
-    --text-gradient-success: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
-    --primary: #43e97b;
-    --primary-dark: #184e68;
-    --primary-light: #a8ff78;
-    --primary-subtle: #e0ffe0;
-    --secondary: #a8ff78;
-    --secondary-light: #78ffd6;
-    --accent: #38f9d7;
-    --accent-light: #a8edea;
-    --danger: #ef4444;
-    --success: #43e97b;
-    --bg-primary: linear-gradient(135deg, #e0ffe0 0%, #f8fafc 100%);
-    --bg-secondary: linear-gradient(135deg, #f8fafc 0%, #e0ffe0 100%);
-    --bg-tertiary: linear-gradient(135deg, #f1f5f9 0%, #cbd5e1 100%);
-    --bg-card: linear-gradient(145deg, rgba(255,255,255,0.95) 0%, rgba(232,255,244,0.9) 100%);
-    --bg-subtle: linear-gradient(135deg, #e0ffe0 0%, #f1f5f9 100%);
-    --bg-hover: linear-gradient(135deg, #e0ffe0 0%, #e2e8f0 100%);
-    --text-primary: #184e68;
-    --text-secondary: #57ca85;
-    --text-tertiary: #a8ff78;
-    --text-light: #cbd5e1;
-    --border: #57ca85;
-    --border-light: #a8ff78;
-    --border-hover: #43e97b;
-    --shadow-sm: 0 1px 2px 0 rgba(67, 233, 123, 0.05);
-    --shadow-md: 0 4px 6px -1px rgba(67, 233, 123, 0.1), 0 2px 4px -1px rgba(67, 233, 123, 0.06);
-    --shadow-lg: 0 10px 15px -3px rgba(67, 233, 123, 0.1), 0 4px 6px -2px rgba(67, 233, 123, 0.05);
-    --shadow-xl: 0 20px 25px -5px rgba(67, 233, 123, 0.1), 0 10px 10px -5px rgba(67, 233, 123, 0.04);
-    --shadow-gradient: 0 10px 30px rgba(67, 233, 123, 0.3);
-    --radius: 12px;
-    --radius-lg: 16px;
-    --radius-xl: 20px;
-    --max-width: 1400px;
-}
+      --primary-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+      --secondary-gradient: linear-gradient(135deg, #a8ff78 0%, #78ffd6 100%);
+      --primary: #43e97b;
+      --primary-dark: #184e68;
+      --primary-subtle: #e0ffe0;
+      --bg-primary: linear-gradient(135deg, #e0ffe0 0%, #f8fafc 100%);
+      --bg-card: linear-gradient(145deg, rgba(255,255,255,0.95) 0%, rgba(232,255,244,0.9) 100%);
+      --text-primary: #184e68;
+      --text-secondary: #57ca85;
+      --border: #57ca85;
+      --radius: 12px;
+      --radius-xl: 20px;
+    }
 body {
   background: var(--bg-primary);
   font-family: 'Inter', sans-serif;
@@ -193,7 +159,7 @@ body {
       <button type="submit" class="btn btn-signup w-100">Sign Up</button>
     </form>
     <div class="signup-links">
-      Already have an account? <a href="job-finder.html" class="ms-1">Login</a>
+      Already have an account? <a href="index.html" class="ms-1">Login</a>
     </div>
   </div>
   <script>
@@ -203,11 +169,9 @@ document.querySelector('form').addEventListener('submit', function(e) {
   const email = document.getElementById('email').value.trim();
   const password = document.getElementById('password').value;
   const confirmPassword = document.getElementById('confirmPassword').value;
-  const userType = document.getElementById('userType').value;
-
-  // Name validation: only letters and spaces
-  if (!name.match(/^[A-Za-z ]+$/)) {
-    alert('Name must contain only letters and spaces.');
+  // Name validation: only letters and spaces, minimum 6 characters
+  if (!name || !name.match(/^[A-Za-z]+( [A-Za-z]+)*$/) || name.length < 6) {
+    alert('Name must contain only letters, cannot be empty or just spaces, and must be at least 6 characters long.');
     return;
   }
 
@@ -223,21 +187,24 @@ document.querySelector('form').addEventListener('submit', function(e) {
     return;
   }
 
-  if (!userType) {
-    alert('Please select whether you are an Employee or Recruiter.');
+  // Store multiple users in localStorage
+  let users = [];
+  try {
+    users = JSON.parse(window.localStorage.getItem('joblyUsers')) || [];
+  } catch { users = []; }
+
+  // Prevent duplicate email registration
+  if (users.some(u => u.email === email)) {
+    alert('This email is already registered. Please use another email or login.');
     return;
   }
 
-  // Store user data in localStorage
-  const userData = { name, email, password, userType };
+  const userData = { name, email, password };
+  users.push(userData);
+  window.localStorage.setItem('joblyUsers', JSON.stringify(users));
+  // Set current logged-in user
   window.localStorage.setItem('joblyUser', JSON.stringify(userData));
-
-  // Redirect based on user type
-  if (userType === 'employee') {
-    window.location.href = 'job-finder.html';
-  } else {
-    window.location.href = 'recruiter.html';
-  }
+  window.location.href = 'index.html';
 });
 </script>
 </body>
