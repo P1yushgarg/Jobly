@@ -25,36 +25,88 @@
       min-height: 100vh;
     }
     .header {
-      background: var(--primary-gradient);
+      background: linear-gradient(145deg, rgba(20,83,45,0.95) 0%, rgba(38,115,77,0.85) 100%);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid #57ca85;
+      padding: 1rem 0;
+      box-shadow: 0 10px 30px rgba(67, 233, 123, 0.3);
       color: white;
-      padding: 0.5rem 0;
       margin-bottom: 0;
     }
     .navbar .navbar-brand {
-      font-weight: 700;
-      font-size: 1.5rem;
-      color: white;
+      font-size: 2rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    .navbar .navbar-brand:hover {
+      transform: scale(1.05);
+      filter: brightness(1.1);
     }
     .navbar .nav-link {
-      color: white !important;
+      color: #fff !important;
       font-weight: 500;
+      padding: 0.75rem 1.25rem;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .navbar .nav-link::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 100%;
+      background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+      transition: width 0.3s ease;
+      z-index: -1;
+      opacity: 0.1;
+    }
+    .navbar .nav-link:hover::before {
+      width: 100%;
+      opacity: 0.2;
     }
     .navbar .nav-link:hover {
-      color: #184e68 !important;
+      color: #e0ffe0 !important;
+      transform: translateY(-1px);
     }
     .nav-cta {
-      background: #184e68;
-      color: #fff;
-      padding: 0.5rem 1.2rem;
+      background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+      color: white;
+      padding: 0.75rem 1.5rem;
       border-radius: 12px;
       font-weight: 600;
       text-decoration: none;
       margin-left: 1rem;
-      transition: background 0.3s;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 30px rgba(67, 233, 123, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+    .nav-cta::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #a8ff78 0%, #78ffd6 100%);
+      transition: left 0.3s ease;
+      z-index: -1;
+    }
+    .nav-cta:hover::before {
+      left: 0;
     }
     .nav-cta:hover {
-      background: #57ca85;
-      color: #184e68;
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 20px 25px -5px rgba(67, 233, 123, 0.1), 0 10px 10px -5px rgba(67, 233, 123, 0.04);
     }
     .job-section {
       padding: 3rem 0;
@@ -82,7 +134,7 @@
     }
     .job-salary {
       background: var(--primary-gradient);
-      color: white;
+      color: black;
       padding: 0.5rem 1.2rem;
       border-radius: 20px;
       font-weight: 600;
@@ -118,7 +170,7 @@
     }
     .job-tag {
       background: var(--primary-gradient);
-      color: white;
+      color: black;
       padding: 0.25rem 0.75rem;
       border-radius: 20px;
       font-size: 0.85rem;
@@ -158,7 +210,7 @@
     }
     .btn-job {
       background: var(--primary-gradient);
-      color: #fff;
+      color: black;
       font-weight: 600;
       border-radius: 12px;
       padding: 0.75rem 2rem;
@@ -235,33 +287,14 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav mx-auto nav-links">
-            <li class="nav-item"><a class="nav-link" href="job-finder.html#home">Home</a></li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownJobs" role="button" data-bs-toggle="dropdown" aria-expanded="false">Jobs</a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdownJobs">
-                <li><a class="dropdown-item" href="#">HR</a></li>
-                <li><a class="dropdown-item" href="#">Frontend Developer</a></li>
-                <li><a class="dropdown-item" href="#">Fullstack Developer</a></li>
-                <li><a class="dropdown-item" href="#">Backend Developer</a></li>
-                <li><a class="dropdown-item" href="#">Marketing</a></li>
-                <li><a class="dropdown-item" href="#">UI/UX Designer</a></li>
-                <li><a class="dropdown-item" href="#">Data Scientist</a></li>
-              </ul>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownCompanies" role="button" data-bs-toggle="dropdown" aria-expanded="false">Companies</a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdownCompanies">
-                <li><a class="dropdown-item" href="#">TechCorp Solutions</a></li>
-                <li><a class="dropdown-item" href="#">StartupXYZ</a></li>
-                <li><a class="dropdown-item" href="#">FinBank</a></li>
-                <li><a class="dropdown-item" href="#">HealthPlus</a></li>
-                <li><a class="dropdown-item" href="#">Designify</a></li>
-              </ul>
-            </li>
+            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="index.html#featured-jobs">Jobs</a></li>
+            <li class="nav-item"><a class="nav-link" href="index.html#companies">Companies</a></li>
             <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
             <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
           </ul>
-          <a href="#" class="nav-cta" data-bs-toggle="modal" data-bs-target="#joblyLoginModal">Get Started</a>
+          <a href="profile.html" id="userNav" class="nav-cta" style="display:none;" target="_blank"></a>
+          <!-- <a href="#" id="getStartedBtn" class="nav-cta" data-bs-toggle="modal" data-bs-target="#joblyLoginModal">Get Started</a> -->
         </div>
       </div>
     </nav>
