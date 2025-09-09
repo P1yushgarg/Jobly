@@ -239,8 +239,6 @@
                   <span class="badge bg-success me-1">Design Principles</span>
                   <span class="badge bg-success me-1">Color Theory</span>
                   <span class="badge bg-success me-1">Typography</span>
-                  <!-- <span class="badge bg-success me-1">GraphQL</span> -->
-                  <!-- <span class="badge bg-success me-1">Branding Basics</span> -->
                 </div>
                 <div>
                   <button class="btn btn-success me-2"><a href="graphic-designer.html" style="color: white; font-weight: bold; text-decoration: none;">Apply Now</a></button>
@@ -571,7 +569,6 @@
 </div>
 
     <script>
-        // Simple login functions
         function getData(key) {
             try {
                 return JSON.parse(localStorage.getItem(key));
@@ -596,11 +593,8 @@
             }
         }
 
-        // When page loads
         document.addEventListener('DOMContentLoaded', function() {
             showUser();
-
-            // Login form
             var loginForm = document.querySelector('#joblyLoginModal form');
             if (loginForm) {
                 loginForm.addEventListener('submit', function(e) {
@@ -611,10 +605,8 @@
                     var foundUser = users.find(u => u.email === email && u.password === password);
                     
                     if (foundUser) {
-                        // Check if there's a backed up profile for this user
                         var profileBackup = getData('joblyProfileBackup_' + foundUser.email);
                         if (profileBackup && profileBackup.userInfo) {
-                            // Restore the complete profile data
                             foundUser = profileBackup.userInfo;
                             if (profileBackup.gender) foundUser.gender = profileBackup.gender;
                             if (profileBackup.birthday) foundUser.birthday = profileBackup.birthday;
@@ -622,7 +614,7 @@
                         }
                         
                         localStorage.setItem('joblyUser', JSON.stringify(foundUser));
-                        localStorage.removeItem('isLoggedOut'); // Clear logout flag
+                        localStorage.removeItem('isLoggedOut'); 
                         bootstrap.Modal.getInstance(document.getElementById('joblyLoginModal')).hide();
                         showUser();
                     } else {
@@ -632,7 +624,6 @@
             }
         });
 
-        // Newsletter form
         document.querySelector('.newsletter-form').addEventListener('submit', function(e) {
             e.preventDefault();
             var email = this.querySelector('.newsletter-input').value;
@@ -667,16 +658,14 @@
                 alert('Found ' + foundJobs + ' jobs');
             }
         });
-
         // Clear filters functionality
         document.getElementById('clearFiltersBtn').addEventListener('click', function() {
-            // Reset all form inputs
+
             var searchForm = document.querySelector('.search-form');
             searchForm.querySelector('[name="keywords"]').value = '';
             searchForm.querySelector('[name="location"]').value = '';
             searchForm.querySelector('[name="level"]').value = '';
             
-            // Show all job cards
             var jobCards = document.querySelectorAll('.job-card');
             jobCards.forEach(function(card) {
                 card.parentElement.style.display = '';
@@ -714,7 +703,6 @@
             updateTestimonialSlider();
         }
 
-        // Event listeners for testimonial navigation
         if (nextBtn) {
             nextBtn.addEventListener('click', nextTestimonial);
         }
