@@ -539,7 +539,7 @@
         </div>
     </footer>
 
-    <!-- Jobly Login Modal -->
+<!-- Jobly Login Modal -->
 <div class="modal fade" id="joblyLoginModal" tabindex="-1" aria-labelledby="joblyLoginLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
@@ -576,7 +576,6 @@
                 return null; 
             }
         }
-
         function showUser() {
             var user = getData('joblyUser');
             var userNav = document.getElementById('userNav');
@@ -639,7 +638,6 @@
             var searchTerm = this.querySelector('[name="keywords"]').value.toLowerCase();
             var jobCards = document.querySelectorAll('.job-card');
             var foundJobs = 0;
-            
             jobCards.forEach(function(card) {
                 var jobTitle = card.getAttribute('data-title').toLowerCase();
                 var company = card.getAttribute('data-company').toLowerCase();
